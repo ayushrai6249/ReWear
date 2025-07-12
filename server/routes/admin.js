@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 });
 
 // Approve or reject an item
-router.patch('/admin/:id/approve', async (req, res) => {
+router.patch('/:id/approve', async (req, res) => {
   try {
     // if (req.user.role !== 'admin') {
     //   return res.status(403).json({ error: 'Access denied' });
@@ -41,7 +41,7 @@ router.patch('/admin/:id/approve', async (req, res) => {
 });
 
 // Delete an item
-router.delete('/admin/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     // if (req.user.role !== 'admin') {
     //   return res.status(403).json({ error: 'Access denied' });
