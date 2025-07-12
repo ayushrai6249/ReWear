@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { assets } from '../assets/assets';
 import axios from 'axios'; 
+import { toast } from 'react-toastify';
+import { useContext } from 'react';
+import { UserContext } from '../context/AppContext';
 
 const AddCloth = () => {
   const [image, setImage] = useState(null);
@@ -8,8 +11,11 @@ const AddCloth = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext);
+
 
 const handleSave = async () => {
+  console.log(user);
   if (!image || !name || !description || !price) {
     alert("All fields are required.");
     return;
@@ -19,6 +25,7 @@ const handleSave = async () => {
 
   try {
     const formData = new FormData();
+     formData.append('user', user._id); 
     formData.append('image', image);
     formData.append('name', name);
     formData.append('description', description);
