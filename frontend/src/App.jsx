@@ -13,7 +13,8 @@ import SwapRequests from './pages/SwapRequests';
 import About from './pages/About';
 import UserDashboard from './Components/UserDashboard';
 import AddCloth from './pages/AddCloth';
-import ItemDetail from './components/ItemDetail'; // Keep this too
+import ItemDetail from './components/ItemDetail'; 
+import AdminItemModeration from './pages/adminpage';
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
         <Route path="/swap-requests" element={<SwapRequests />} />
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/add-cloth" element={<AddCloth />} />
-        <Route path="/item" element={<ItemDetail />} /> {/* Your new route */}
+        <Route path="/item" element={<ItemDetail />} />
+        <Route path="/admin" element={<AdminItemModeration />} />
       </Routes>
       </UserProvider>
     </div>
