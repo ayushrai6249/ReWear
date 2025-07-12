@@ -7,7 +7,6 @@
   font-family: Outfit;
 }
 
-<<<<<<< HEAD
 ::-webkit-scrollbar{
     @apply hidden
 }
@@ -15,8 +14,3 @@
 .active hr{
     @apply block
 }
-=======
-.active hr {
-  @apply block;
-}
->>>>>>> 34ade7cd10ec484d038c8a33cc92b79351e58a41
