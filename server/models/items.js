@@ -25,7 +25,11 @@ const itemSchema = new mongoose.Schema({
   approved: {
     type: Boolean,
     default: false
-  }
+  },
+    swapItem: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item'
+    }]
 });
 
 module.exports = mongoose.model('Item',itemSchema);
