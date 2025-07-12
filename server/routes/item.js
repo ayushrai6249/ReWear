@@ -7,12 +7,13 @@ const upload = require('../middleware/upload');
 // POST /api/items
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { user, name, description, price } = req.body;
+    const { user, name, description, price, category } = req.body;
 
     const newItem = new Item({
       user,
       name,
       description,
+      category,
       photo: req.file.path,
       price,
     });

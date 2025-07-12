@@ -26,10 +26,14 @@ const itemSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-    swapItem: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Item'
-    }]
+  category:{
+    type: String,
+    required: true
+  },
+  swapItem: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Item'
+  }]
 });
 
 module.exports = mongoose.model('Item',itemSchema);
