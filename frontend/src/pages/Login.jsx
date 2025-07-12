@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-// import { AppContext } from '../context/AppContext';
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../context/AppContext';
+
 
 const Login = () => {
-  // const { backendUrl, token, setToken } = useContext(AppContext);
-  const [token,setToken] = useState(false);
+  const [token, setToken] = useState(false);
   const navigate = useNavigate();
   const [state, setState] = useState('sign up');
-
+  const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
@@ -18,35 +19,36 @@ const Login = () => {
     event.preventDefault();
     try {
       if (state === "sign up") {
-        console.log(password);
-        // const { data } = await axios.post(backendUrl + '/user/register', { name, email, password });
-        // if (data.success) {
-        //   localStorage.setItem('token', data.token);
-        //   setToken(data.token);
-        // }
-        // else {
-        //   toast.error(data.message);
-        // }
-      }
-      else {
-        // const { data } = await axios.post(backendUrl + '/user/login', { email, password });
-        // if (data.success) {
-        //   localStorage.setItem('token', data.token);
-        //   setToken(data.token);
-        // }
-        // else {
-        //   toast.error(data.message);
-        // }
+        const { data } = await axios.post('http://localhost:9000/api/users', { name, email, password });
+        if (data && data._id) {
+          toast.success('Account created! Please login.');
+          setState('login');
+        } else {
+          toast.error('Sign up failed');
+        }
+      } else {
+      const { data } = await axios.post('http://localhost:9000/api/auth/login', { email, password });
+if (data && data.token && data.user) {
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('user', JSON.stringify(data.user));
+  setToken(data.token);
+  setUser(data.user); 
+  toast.success('Login successful!');
+        } else {
+          toast.error('Login failed');
+        }
       }
     } catch (error) {
-      // toast.error(error.message);
+      toast.error(error.response?.data?.error || error.message);
     }
   }
+
   useEffect(() => {
     if (token) {
       navigate('/');
     }
-  }, [token])
+  }, [token, navigate]);
+
   return (
     <form onSubmit={onSubmitHandler} className='min-h-[80vh] flex items-center'>
       <div className='flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg'>
