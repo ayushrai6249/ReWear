@@ -31,5 +31,13 @@ router.post('/', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to add item' });
   }
 });
-
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const userItems = await Item.find({ user: req.params.userId }).sort({ createdAt: -1 });
+    res.json(userItems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch user items' });
+  }
+});
 module.exports = router;
