@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Item = require('../models/items');
-const User = require('../models/users'); // ✅ Import User model
+const User = require('../models/users'); //  Import User model
 const upload = require('../middleware/upload');
 
 // POST /api/items
@@ -51,6 +51,29 @@ router.get('/user/:userId', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch user items' });
+  }
+});
+
+router.patch('/:id/swap', async (req, res) => {
+  try {
+    const { swapItemId } = req.body; 
+    const targetItem = await Item.findById(req.params.id);
+
+    if (!targetItem) {
+      return res.status(404).json({ error: 'Target item not found' });
+    }
+
+    // Prevent duplicate swap entry
+    if (targetItem.swapItem.includes(swapItemId)) {
+      return res.status(400).json({ error: 'Item already requested for swap' });
+    }
+
+    targetItem.swapItem.push(swapItemId);
+    await targetItem.save();
+
+    res.json({ message: 'Swap request sent successfully', item: targetItem });
+  } catch (err) {
+    res.status(500).json({ error: 'Swap operation failed' });
   }
 });
 module.exports = router;

@@ -37,16 +37,24 @@ const FilterBar = ({ onFilterChange, onAddCloth }) => {
                 value={category}
                 onChange={handleCategoryChange}
             >
-                <option value="">All Categories</option>
-                <option value="Tops">Tops</option>
-                <option value="Bottoms">Bottoms</option>
-                <option value="Dresses">Dresses</option>
-                <option value="Outerwear">Outerwear</option>
-                <option value="Accessories">Accessories</option>
+                <option value="">-- Select Category --</option>
+            <option value="Shirt">Shirt</option>
+            <option value="Jacket">Jacket</option>
+            <option value="Jeans">Jeans</option>
+            <option value="Kurta">Kurta</option>
+            <option value="T-Shirt">T-Shirt</option>
+            <option value="Saree">Saree</option>
+            <option value="Hoodie">Hoodie</option>
+            <option value="Dress">Dress</option>
+            <option value="Trousers">Trousers</option>
+            <option value="Blazer">Blazer</option>
+            <option value="Shorts">Shorts</option>
+            <option value="Sweater">Sweater</option>
+            <option value="Lehenga">Lehenga</option>
             </select>
            
             <button
-                 
+                onClick={onAddCloth}
                 className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-md shadow-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
                 List Your Cloth

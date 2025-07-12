@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,6 +16,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+   points: {
+    type: String,
+    default: '200'
   },
   items: [{
     type: mongoose.Schema.Types.ObjectId,
