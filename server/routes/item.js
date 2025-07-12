@@ -31,6 +31,19 @@ router.post('/', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to add item' });
   }
 });
+// GET /api/items/approved
+router.get('/approved', async (req, res) => {
+  try {
+    const items = await Item.find({ approved: true })
+      .populate('user', 'name') // so we can show postedBy
+      .sort({ createdAt: -1 });
+
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch approved items' });
+  }
+});
+
 router.get('/user/:userId', async (req, res) => {
   try {
     const userItems = await Item.find({ user: req.params.userId }).sort({ createdAt: -1 });
