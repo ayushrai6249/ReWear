@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import React, { useState,useEffect} from 'react'
+import { NavLink, useNavigate ,useLocation} from 'react-router-dom'
 import { assets } from '../assets/assets';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(true);
+  const location = useLocation(); 
+  const [token, setToken] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+
+  
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    setToken(!!storedToken); 
+  }, [location]); 
+
   const logout = () => {
+    localStorage.clear();
     setToken(false);
-  }
+    navigate('/login');
+  };
   return (
     <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400'>
       <h1 onClick={() => { navigate('/') }} className='cursor-pointer text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-500'>ReWear</h1>

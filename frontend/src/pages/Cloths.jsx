@@ -20,13 +20,13 @@ const Cloths = () => {
 
   const navigate = useNavigate();
 
-  // ✅ Show redeem modal
+  //  Show redeem modal
   const handleRedeemClick = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
 
-  // ✅ Confirm redemption
+  //  Confirm redemption
   const confirmRedeem = async () => {
     try {
       const res = await axios.post(`http://localhost:9000/api/items/${selectedItem.id}/redeem`, {
@@ -46,7 +46,7 @@ const Cloths = () => {
     }
   };
 
-  // ✅ Fetch approved clothes
+  // Fetch approved clothes
   useEffect(() => {
     const fetchApprovedClothes = async () => {
       try {
@@ -72,7 +72,7 @@ const Cloths = () => {
     fetchApprovedClothes();
   }, []);
 
-  // ✅ Filter logic
+  // Filter logic
   useEffect(() => {
     const applyFilters = () => {
       let updatedClothes = [...allClothes];
@@ -128,7 +128,7 @@ const Cloths = () => {
               key={cloth.id}
               cloth={cloth}
               onViewDetails={handleViewDetails}
-              onRedeem={() => handleRedeemClick(cloth)} // ✅ call popup
+              onRedeem={() => handleRedeemClick(cloth)} //  call popup
             />
           ))
         ) : (
@@ -138,7 +138,7 @@ const Cloths = () => {
         )}
       </div>
 
-      {/* ✅ Redeem confirmation modal */}
+      {/* Redeem confirmation modal */}
       <RedeemModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
