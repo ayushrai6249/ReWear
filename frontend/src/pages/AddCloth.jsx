@@ -1,20 +1,51 @@
 import React, { useState } from 'react';
 import { assets } from '../assets/assets';
+import axios from 'axios'; 
 
 const AddCloth = () => {
   const [image, setImage] = useState(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSave = () => {
-    console.log({
-      name,
-      price,
-      description,
-      image,
+const handleSave = async () => {
+  if (!image || !name || !description || !price) {
+    alert("All fields are required.");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('price', price);
+
+    const token = localStorage.getItem('token');
+
+    const response = await axios.post('http://localhost:9000/api/items', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
     });
-  };
+
+    alert('Cloth added successfully!');
+    console.log('Item created:', response.data);
+    setImage(null);
+    setName('');
+    setDescription('');
+    setPrice('');
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong while uploading.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className='max-w-xl mx-auto mt-10 p-6 bg-white shadow-xl rounded-2xl space-y-6'>
