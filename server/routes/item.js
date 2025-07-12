@@ -31,6 +31,39 @@ router.post('/', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to add item' });
   }
 });
+router.post('/:id/redeem', async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const item = await Item.findById(req.params.id);
+    const user = await User.findById(userId);
+
+    if (!item || !user) {
+      return res.status(404).json({ error: 'Item or user not found' });
+    }
+
+    if (!item.available) {
+      return res.status(400).json({ error: 'Item is not available for redemption' });
+    }
+
+    const userPoints = parseInt(user.points || '0');
+    if (userPoints < item.price) {
+      return res.status(400).json({ error: 'Not enough points to redeem this item' });
+    }
+
+   
+    user.points = String(userPoints - item.price);
+    item.available = false;
+
+    await user.save();
+    await item.save();
+
+    res.json({ message: 'Item successfully redeemed!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Redemption failed' });
+  }
+});
+
 // GET /api/items/approved
 router.get('/approved', async (req, res) => {
   try {

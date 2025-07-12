@@ -5,7 +5,6 @@ import ClothCard from './ClothCard';
 import { useNavigate } from 'react-router-dom';
 import RedeemModal from './RedeemModal';
 
-
 const Cloths = () => {
   const [allClothes, setAllClothes] = useState([]);
   const [filteredClothes, setFilteredClothes] = useState([]);
@@ -14,23 +13,29 @@ const Cloths = () => {
     category: '',
     size: '',
   });
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+
+  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')));
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleRedeem = (item) => {
+  const navigate = useNavigate();
+
+  // ✅ Show redeem modal
+  const handleRedeemClick = (item) => {
     setSelectedItem(item);
     setShowModal(true);
   };
 
+  // ✅ Confirm redemption
   const confirmRedeem = async () => {
     try {
       const res = await axios.post(`http://localhost:9000/api/items/${selectedItem.id}/redeem`, {
         userId: user._id,
       });
 
-      // Update local user points
-      const updatedUser = { ...user, points: String(Number(user.points) - selectedItem.price) };
+      const updatedPoints = Number(user.points) - selectedItem.price;
+      const updatedUser = { ...user, points: String(updatedPoints) };
+
       localStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
       setShowModal(false);
@@ -41,25 +46,7 @@ const Cloths = () => {
     }
   };
 
-  const navigate = useNavigate();
-
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  // ✅ Handle redeem logic
-  const handleRedeem = async (itemId) => {
-    try {
-      const res = await axios.post(`http://localhost:9000/api/items/${itemId}/redeem`, {
-        userId: user._id,
-      });
-
-      alert(res.data.message || 'Item redeemed!');
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.error || 'Failed to redeem item.');
-    }
-  };
-
-  //  Fetch approved clothes
+  // ✅ Fetch approved clothes
   useEffect(() => {
     const fetchApprovedClothes = async () => {
       try {
@@ -85,6 +72,7 @@ const Cloths = () => {
     fetchApprovedClothes();
   }, []);
 
+  // ✅ Filter logic
   useEffect(() => {
     const applyFilters = () => {
       let updatedClothes = [...allClothes];
@@ -100,13 +88,11 @@ const Cloths = () => {
       }
 
       if (filters.category) {
-        updatedClothes = updatedClothes.filter(
-          (cloth) => cloth.category === filters.category
-        );
+        updatedClothes = updatedClothes.filter(cloth => cloth.category === filters.category);
       }
 
       if (filters.size) {
-        updatedClothes = updatedClothes.filter((cloth) => cloth.size === filters.size);
+        updatedClothes = updatedClothes.filter(cloth => cloth.size === filters.size);
       }
 
       setFilteredClothes(updatedClothes);
@@ -116,7 +102,7 @@ const Cloths = () => {
   }, [filters, allClothes]);
 
   const handleFilterChange = (newFilters) => {
-    setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
+    setFilters(prev => ({ ...prev, ...newFilters }));
   };
 
   const handleAddCloth = () => {
@@ -142,7 +128,7 @@ const Cloths = () => {
               key={cloth.id}
               cloth={cloth}
               onViewDetails={handleViewDetails}
-              onRedeem={() => handleRedeem(cloth.id)} // 👈 Pass redeem handler
+              onRedeem={() => handleRedeemClick(cloth)} // ✅ call popup
             />
           ))
         ) : (
@@ -151,6 +137,15 @@ const Cloths = () => {
           </p>
         )}
       </div>
+
+      {/* ✅ Redeem confirmation modal */}
+      <RedeemModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={confirmRedeem}
+        itemPrice={selectedItem?.price}
+        userPoints={parseInt(user?.points || '0')}
+      />
     </div>
   );
 };
