@@ -21,6 +21,10 @@ const itemSchema = new mongoose.Schema({
   available: {
     type: Boolean,
     default: true
+  },
+  approved: {
+    type: Boolean,
+    default: true
   }
 });
 
