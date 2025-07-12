@@ -44,7 +44,7 @@ const Navbar = () => {
                 <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4'>
                   <p onClick={() => { navigate('/my-profile') }} className='hover:text-black cursor-poiner'>Profile</p>
                   <p onClick={() => { navigate('/my-cloths') }} className='hover:text-black cursor-poiner'>My Cloths</p>
-                  <p onClick={() => { navigate('/add-cloth') }} className='hover:text-black cursor-poiner'>Add Cloths</p>
+                  <p onClick={() => { navigate('/add-cloth') }} className='hover:text-black cursor-poiner'>List Item</p>
                   <p onClick={() => logout()} className='hover:text-black cursor-poiner'>Logout</p>
                 </div>
               </div>

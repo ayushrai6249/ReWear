@@ -27,13 +27,13 @@ const Login = () => {
           toast.error('Sign up failed');
         }
       } else {
-      const { data } = await axios.post('http://localhost:9000/api/auth/login', { email, password });
-if (data && data.token && data.user) {
-  localStorage.setItem('token', data.token);
-  localStorage.setItem('user', JSON.stringify(data.user));
-  setToken(data.token);
-  setUser(data.user); 
-  toast.success('Login successful!');
+        const { data } = await axios.post('http://localhost:9000/api/auth/login', { email, password });
+        if (data && data.token && data.user) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          setToken(data.token);
+          setUser(data.user);
+          toast.success('Login successful!');
         } else {
           toast.error('Login failed');
         }
