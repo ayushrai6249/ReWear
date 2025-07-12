@@ -3,6 +3,8 @@ import axios from 'axios';
 import FilterBar from './FilterBar';
 import ClothCard from './ClothCard';
 import { useNavigate } from 'react-router-dom';
+import RedeemModal from './RedeemModal';
+
 
 const Cloths = () => {
   const [allClothes, setAllClothes] = useState([]);
@@ -12,6 +14,32 @@ const Cloths = () => {
     category: '',
     size: '',
   });
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [showModal, setShowModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleRedeem = (item) => {
+    setSelectedItem(item);
+    setShowModal(true);
+  };
+
+  const confirmRedeem = async () => {
+    try {
+      const res = await axios.post(`http://localhost:9000/api/items/${selectedItem.id}/redeem`, {
+        userId: user._id,
+      });
+
+      // Update local user points
+      const updatedUser = { ...user, points: String(Number(user.points) - selectedItem.price) };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      setUser(updatedUser);
+      setShowModal(false);
+      alert(res.data.message || 'Item redeemed!');
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.error || 'Failed to redeem item.');
+    }
+  };
 
   const navigate = useNavigate();
 

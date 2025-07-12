@@ -12,7 +12,7 @@ const Header = () => {
                     <p >Simply browse through our collection of reusable clothes, <br className='hidden sm:block' />
                         swap directly or redeem points — hassle-free and sustainable.</p>
                 </div>
-                <a href="#cloths" className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300'>Browse Items <img className='w-3' src={assets.arrow_icon} alt="" /></a>
+                <a href="#categories" className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300'>Browse Items <img className='w-3' src={assets.arrow_icon} alt="" /></a>
             </div>
             {/* Right */}
             <div className='md:w-1/2 relative'>

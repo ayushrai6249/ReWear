@@ -11,7 +11,7 @@ const Navbar = () => {
   }
   return (
     <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400'>
-      <h1 onClick={() => { navigate('/') }} className='text-primary cursor-pointer text-3xl'>ReWear</h1>
+      <h1 onClick={() => { navigate('/') }} className='cursor-pointer text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-500'>ReWear</h1>
       <ul className='hidden md:flex items-start gap-5 font-medium'>
         <NavLink to='/'>
           <li className='py-1'>HOME</li>
@@ -54,7 +54,7 @@ const Navbar = () => {
         <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
         <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all `}>
           <div className='flex items-center justify-between px-5 py-6'>
-            <h1 className='text-primary cursor-pointer text-3xl'>ReWear</h1>
+            <h1 className='cursor-pointer text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-500'>ReWear</h1>
             <img className='w-7' onClick={() => setShowMenu(false)} src={assets.cross_icon} alt="" />
           </div>
           <ul className='flex flex-col items-center gap-2 mt-3 px-5 text-lg font-medium'>

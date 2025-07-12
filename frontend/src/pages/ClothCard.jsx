@@ -8,6 +8,7 @@ const ClothCard = ({ cloth, onViewDetails, onRedeem }) => {
         <p className="text-gray-600 text-sm">{cloth.description}</p>
         <p className="text-sm mt-2 text-gray-500">Category: {cloth.category}</p>
         <p className="text-sm text-gray-500">Posted by: {cloth.postedBy}</p>
+          <p className="text-sm text-gray-500">Posted by: {cloth.price}</p>
         <div className="mt-4 flex justify-between">
           <button
             onClick={() => onViewDetails(cloth.id)}
