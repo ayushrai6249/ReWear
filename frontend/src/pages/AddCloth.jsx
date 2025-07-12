@@ -17,60 +17,74 @@ const AddCloth = () => {
   };
 
   return (
-    <div className='max-w-lg flex flex-col gap-4 text-sm'>
-      <label htmlFor="image" className='font-medium'>
-        Upload Image
-        <div className='inline-block relative cursor-pointer mt-2'>
+    <div className='max-w-xl mx-auto mt-10 p-6 bg-white shadow-xl rounded-2xl space-y-6'>
+      <h2 className='text-2xl font-semibold text-gray-800 text-center'>Add New Cloth</h2>
+
+      <div className='flex flex-col items-center gap-2'>
+        <label htmlFor="image" className='cursor-pointer relative group'>
           <img
-            className='w-36 h-36 object-cover rounded opacity-75'
+            className='w-40 h-40 object-cover rounded-lg shadow border border-gray-200 group-hover:opacity-80 transition'
             src={image ? URL.createObjectURL(image) : assets.profile_pic}
             alt="Cloth preview"
           />
+          <div className='absolute inset-0 flex items-center justify-center text-white text-sm bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 rounded-lg transition'>
+            Click to change image
+          </div>
+          <input
+            type="file"
+            id="image"
+            hidden
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+        </label>
+      </div>
+
+      <div className='space-y-4'>
+        <div>
+          <label htmlFor="name" className='block text-sm font-medium text-gray-700'>Cloth Name</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className='w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary'
+            placeholder="e.g., Cotton Shirt"
+          />
         </div>
-        <input
-          onChange={(e) => setImage(e.target.files[0])}
-          type="file"
-          id='image'
-          hidden
-        />
-      </label>
 
-      <label htmlFor="name" className='font-medium'>Name</label>
-      <input
-        className='bg-gray-50 text-lg p-2 rounded'
-        type='text'
-        id='name'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder='Enter cloth name'
-      />
+        <div>
+          <label htmlFor="price" className='block text-sm font-medium text-gray-700'>Price (₹)</label>
+          <input
+            type="number"
+            id="price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className='w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary'
+            placeholder="e.g., 799"
+          />
+        </div>
 
-      <label htmlFor="price" className='font-medium'>Price (in ₹)</label>
-      <input
-        className='bg-gray-50 text-lg p-2 rounded'
-        type='number'
-        id='price'
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        placeholder='Enter price'
-      />
+        <div>
+          <label htmlFor="description" className='block text-sm font-medium text-gray-700'>Description</label>
+          <textarea
+            id="description"
+            rows={4}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className='w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary resize-none'
+            placeholder="Describe the material, size, or other details..."
+          ></textarea>
+        </div>
+      </div>
 
-      <label htmlFor="description" className='font-medium'>Description</label>
-      <textarea
-        id='description'
-        className='bg-gray-50 text-base p-2 rounded'
-        rows={4}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder='Enter description'
-      ></textarea>
-
-      <button
-        className='border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-300'
-        onClick={handleSave}
-      >
-        Save Information
-      </button>
+      <div className='text-center'>
+        <button
+          onClick={handleSave}
+          className='bg-primary text-white px-6 py-2 rounded-full text-base font-medium hover:bg-opacity-90 transition-all duration-300 shadow-sm'
+        >
+          Save Information
+        </button>
+      </div>
     </div>
   );
 };
