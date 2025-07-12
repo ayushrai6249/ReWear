@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
+const itemRouter = require('./routes/item');
 
 dotenv.config();
 const app = express();
@@ -24,6 +25,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/items', itemRouter);
 app.get('/', (req, res) => {
   res.send('Welcome to the API');
 });

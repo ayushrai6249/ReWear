@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Item = require('../models/items');
 
-// PUT /api/items - Create a new item
-router.put('/', async (req, res) => {
+// /api/items
+router.post('/', async (req, res) => {
   try {
     const newItem = new Item(req.body);
     await newItem.save();
@@ -12,3 +12,5 @@ router.put('/', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+module.exports = router;
