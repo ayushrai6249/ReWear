@@ -1,15 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const Item = require('../models/items');
+const upload = require('../middleware/upload');
 
-// /api/items
-router.post('/', async (req, res) => {
+// POST /api/items
+router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const newItem = new Item(req.body);
+    const { name, description, price } = req.body;
+
+    const newItem = new Item({
+      // user: req.user.userid,
+      name,
+      description,
+      photo: req.file.path, 
+      price,
+    });
+
     await newItem.save();
     res.status(201).json(newItem);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: 'Failed to add item' });
   }
 });
 
