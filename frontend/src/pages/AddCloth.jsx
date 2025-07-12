@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { assets } from '../assets/assets';
+import { toast } from 'react-toastify';
+
 
 const AddCloth = () => {
   const [image, setImage] = useState(null);
@@ -35,6 +37,7 @@ const AddCloth = () => {
             id="image"
             hidden
             onChange={(e) => setImage(e.target.files[0])}
+            required
           />
         </label>
       </div>
@@ -49,6 +52,7 @@ const AddCloth = () => {
             onChange={(e) => setName(e.target.value)}
             className='w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary'
             placeholder="e.g., Cotton Shirt"
+            required
           />
         </div>
 
@@ -61,6 +65,7 @@ const AddCloth = () => {
             onChange={(e) => setPrice(e.target.value)}
             className='w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary'
             placeholder="e.g., 799"
+            required
           />
         </div>
 
@@ -73,6 +78,7 @@ const AddCloth = () => {
             onChange={(e) => setDescription(e.target.value)}
             className='w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary resize-none'
             placeholder="Describe the material, size, or other details..."
+            required
           ></textarea>
         </div>
       </div>
