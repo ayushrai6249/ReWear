@@ -18,6 +18,7 @@ import Blazer from './blazer.webp'
 import Shorts from './shorts.webp'
 import Sweater from './sweater.webp'
 import Lehenga from './lehenga.webp'
+import About from './about.png'
 
 
 export const assets = {
@@ -28,6 +29,7 @@ export const assets = {
     rrr,
     arrow_icon,
     header_img,
+    About,
 }
 
 export const categories = [
